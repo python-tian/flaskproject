@@ -1,0 +1,82 @@
+{% extends 'blank.html' %}
+
+{% block title %}
+{%if request.cookies.user_identity == "0"%}
+
+    学生信息完善
+{%else%}
+教师信息完善
+{%endif%}
+{% endblock %}
+
+
+
+{% block content %}
+{%if request.cookies.user_identity == "0" %}
+{%if  request.cookies.user_identity_id %}
+<h1 class="h3 mb-4 text-gray-800 " style="text-align: center;letter-spacing: 10px;">欢迎进入学生管理平台</h1>
+<div style="text-align: center"><p style="font-size: 100px;color: red;margin-top: 200px;">恭喜你信息完善成功</p></div>
+
+{%else%}
+<h1 class="h3 mb-4 text-gray-800 " style="text-align: center;letter-spacing: 10px;">欢迎进入学生管理平台<em style="font-size:25px;color: red ">(请完善你的信息)</em></h1>
+     <form method="post">
+     {{ students_form.csrf_token }}
+        <div>
+            {{ students_form.name }}
+            <br>
+        </div>
+          <div>
+            {{ students_form.age }}
+            <br>
+        </div>
+          <div>
+            {{ students_form.gender }}
+            <br>
+        </div>
+         <div>
+             {{students_form.has_id}}
+             <br>
+         </div>
+
+        <div>
+            <input class="btn btn-primary btn-block" type="submit" value="提交">
+        </div>
+          <div style="text-align: center"><span style="color: red;font-size: 20px;">{{result.data}}</span></div>
+     </form>
+{%endif%}
+{%else%}
+{%if request.cookies.user_identity_id%}
+
+
+ <h1 class="h3 mb-4 text-gray-800 " style="text-align: center;letter-spacing: 10px;">欢迎进入教师管理平台</h1>
+<div style="text-align: center"><p style="font-size: 100px;color: red;margin-top: 200px;">恭喜你信息完善成功</p></div>
+
+{%else%}
+  <h1 class="h3 mb-4 text-gray-800 " style="text-align: center;letter-spacing: 10px;">欢迎进入教师管理平台<em style="font-size:25px; color: red">(请完善你的信息)</em></h1>
+     <form method="post" action="/add_teacher/">
+     {{ teacher_form.csrf_token }}
+        <div>
+            {{ teacher_form.name }}
+            <br>
+        </div>
+          <div>
+            {{ teacher_form.age }}
+            <br>
+        </div>
+          <div>
+            {{ teacher_form.gender }}
+            <br>
+        </div>
+          <div>
+            {{ teacher_form.course }}
+            <br>
+        </div>
+
+        <div>
+            <input class="btn btn-primary btn-block" type="submit" value="提交">
+        </div>
+          <div style="text-align: center"><span style="color: red;font-size: 20px;">{{result.data}}</span></div>
+     </form>
+{%endif%}
+{%endif%}
+{% endblock %}

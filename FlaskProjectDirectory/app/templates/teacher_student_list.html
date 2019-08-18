@@ -1,0 +1,47 @@
+{% extends 'blank.html' %}
+{% block title %}
+    学生个人信息
+{% endblock %}
+{% block content %}
+    <form method="post">
+            <p style="display: none">{{ csrf_token() }}</p>
+    <table class="table" style="text-align: center">
+            <div style="text-align: center"><h1 >课程详情</div>
+        <thead>
+
+            <tr>
+                <th>课程名字</th>
+                 <th>课程描述</th>
+                <th>授课老师</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+
+        <tbody>
+    {%for rel in teacher_course_list%}
+            <tr>
+                <td>{{rel.course.lable}}</td>
+                 <td>{{rel.course.description}}</td>
+                 <td>
+                        {{rel.teacher.name}}
+                 </td>
+
+
+
+                <td><a class="btn btn-danger" href="">查看此成绩</a></td>
+            </tr>
+        {%endfor%}
+
+
+
+
+
+
+
+        </tbody>
+
+
+    </table>
+
+  </form>
+{%endblock%}

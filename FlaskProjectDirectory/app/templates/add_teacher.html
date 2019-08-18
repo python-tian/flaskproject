@@ -1,0 +1,29 @@
+{% extends 'blank.html' %}
+{% block title %}
+    教师注册
+{% endblock %}
+{% block content %}
+     <h1 class="h3 mb-4 text-gray-800 " style="text-align: center;letter-spacing: 10px;">添加教师</h1>
+     <form method="post">
+     {{ teacher_form.csrf_token }}
+        <div>
+            {{ teacher_form.name }}
+            <br>
+        </div>
+          <div>
+            {{ teacher_form.age }}
+            <br>
+        </div>
+          <div>
+            {{ teacher_form.gender }}
+            <br>
+        </div>
+          <div>
+            {{ teacher_form.course }}
+            <br>
+        </div>
+        <div>
+            <input class="btn btn-primary btn-block" type="submit" value="提交">
+        </div>
+     </form>
+{% endblock %}

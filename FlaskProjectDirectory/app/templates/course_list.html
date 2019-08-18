@@ -1,0 +1,129 @@
+{% extends 'blank.html' %}
+{% block title %}
+    学生个人信息
+{% endblock %}
+{% block content %}
+
+    <table class="table" style="text-align: center">
+            <div style="text-align: center"><h1 >选择教师</h1></div>
+        <thead>
+
+            <tr>
+                <th>课程名字</th>
+                 <th>课程描述</th>
+                <th>授课老师</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {%for course in lst%}
+    <form method="post" action="/teacher_student/">
+            <p style="display: none">{{ csrf_token() }}</p>
+
+            <tr>
+                <td>{{course.course.lable}} <br>
+                    <!--<a href="/teacher_course/?id={{course.id}}}">查看教师详情</a></td>-->
+                   <!--<button class="btn btn-danger" data-toggle="modal" data-target="#myModal">-->
+                      <!--</button>-->
+                <a class="btn btn-danger" data-toggle="modal" data-target="#myModal{{course.course.id}}">查看教师详情</a>
+                </td>
+                 <td>{{course.course.description}}</td>
+
+                 <td>
+                 <input type="hidden" id="gp{{course.course.id}}" value="{{course.course.id}}">
+              <select name="teacher_id"  id="tc{{course.course.id}}" onblur="edit({{course.course.id}})">
+
+                  {%for teacher in course.teacher_list%}
+
+                  <option  value="{{teacher.id}}">
+                     {{teacher.name}}
+                  </option>
+                      {%endfor%}
+             </select>
+
+
+
+                 </td>
+
+
+
+                <td>
+                            <input type="hidden" name="course_id" value="{{course.course.id}}">
+                    <input id="sub{{course.course.id}}" class="btn btn-danger" type="submit" value="提交" disabled></td>
+            </tr>
+
+
+ <div class="modal fade" id="myModal{{course.course.id}}" tabindex="-1" rode="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">{{course.course.lable}}专业相关教师信息</h4>
+                    <button type="text" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <ul>
+                     {%for teacher in course.teacher_list%}
+                    <li>姓名：<a href="/teacher/?id={{teacher.id}}">{{teacher.name}}</a></li>
+                    {%endfor%}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+
+ </form>
+
+
+
+ {%endfor%}
+
+
+
+
+
+        </tbody>
+
+
+    </table>
+
+
+{%endblock%}
+{%block script%}
+    <script>
+       function edit(t_id) {
+            var id=$("#gp"+t_id).val();
+            // var goods_price=$("#gp"+t_id).val();
+            var url="/teacher_ajax/?id="+id;
+            $.ajax({
+                url:url,
+                type:'get',
+                data:'',
+                success:function(data) {
+                    var content=data.content;
+
+                   var s=data.status;
+                      if(s=="success"){
+
+                          $("#sub"+t_id).attr("disabled",false);
+                            alert(content);
+                       }else{
+                           $("#sub"+t_id).attr("disabled",true);
+
+                                alert(content);
+                       }
+
+                },
+                error:function(error) {
+                    console.log(error);
+
+
+                }
+            });
+
+        }
+
+            
+
+    </script>
+{%endblock%}

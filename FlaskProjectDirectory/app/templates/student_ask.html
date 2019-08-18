@@ -1,0 +1,74 @@
+{% extends 'blank.html' %}
+{% block title %}
+    所教学生假条信息
+{% endblock %}
+{% block content %}
+ <form method="post">
+            <p style="display: none">{{ csrf_token() }}</p>
+    <table class="table" style="text-align: center">
+        <div style="text-align: center"><h1 >学生假条信息列表<em style="color: red">({{teacher.to_course.lable}}专业）</em> <span style="font-size: 15px;">当前时间：{{now}}</span></h1>
+            <p>以下展示当前月份的假条<em style="color: red">（一月一更新，如需查看记录，请点击以往记录）</em></p>
+
+        </div>
+
+        <thead>
+            <tr>
+                <th>姓名</th>
+                 <th>请假次数</th>
+                <th>批准次数</th>
+                <th>未批准次数</th>
+                 <th>正在申请</th>
+               <th>以往记录</th>
+            </tr>
+        </thead>
+        <tbody>
+       {%for s in s_lst%}
+            <tr>
+                <td>{{s.student.name}}</td>
+                 <td>{{s.count}}</td>
+                 <td>{{s.count1}}</td>
+                <td>{{s.count2}}</td>
+                <td><a href="/audit_ask/?id={{s.student.id}}">{{s.count3}}</a></td>
+
+                <td>
+
+
+                      <a  class="btn btn-danger" data-toggle="modal" data-target="#myModal">查看</a>
+
+                </td>
+
+
+            </tr>
+       {%endfor%}
+<!--<div class="modal fade" id="myModal" tabindex="-1" rode="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+        <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<h4 class="modal-title" id="myModalLabel">学生：所报的课程</h4>-->
+                    <!--<button type="text" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                <!--</div>-->
+                <!--<ul>-->
+
+
+                    <!--<li>专业名字：<br>相关老师：</li>-->
+
+
+                <!--</ul>-->
+
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+ <!--</form>-->
+
+
+
+        </tbody>
+
+    </table>
+ </form>
+
+
+
+{% endblock %}

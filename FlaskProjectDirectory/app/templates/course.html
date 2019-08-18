@@ -1,0 +1,20 @@
+{% extends 'blank.html' %}
+{% block title %}
+    课程详细信息
+{% endblock %}
+{% block content %}
+<div style="text-align: center"><h1>课程详情</h1>
+
+</div>
+<div style="line-height: 100px;margin-left: 200px;">
+    <ul style="list-style: none;font-size: 30px;">
+        <li>课程名称：{{course.lable}}</li>
+        <li>课程描述：{{course.description}}</li>
+        <li>课程内容：<br>
+            <textarea style="width: 700px;height: 200px;"></textarea></li>
+        <li>更新时间:<span style="color: red"></span></li>
+    </ul>
+</div>
+
+
+{%endblock%}

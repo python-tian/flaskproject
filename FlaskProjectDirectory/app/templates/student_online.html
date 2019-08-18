@@ -1,0 +1,172 @@
+{% extends 'blank.html' %}
+{% block title %}
+    学生个人信息
+{% endblock %}
+{% block content %}
+    <form method="post">
+            <p style="display: none">{{ csrf_token() }}</p>
+    <table class="table" style="text-align: center">
+            <div style="text-align: center"><h1 >在线申请（请假）</h1></div>
+        <thead>
+
+            <tr>
+                <th>请假人姓名</th>
+                 <th>请假事由</th>
+                <th>请假时间</th>
+                <th>请假课程</th>
+                <th>相关老师</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td><input type="text" id="sn" name="student_name"  placeholder="请假人姓名"></td>
+                 <td><input type="text" id="re" name="reason"  placeholder="请假事由"></td>
+                 <td><input type="date" id="as" name="asktime" placeholder="请假时间"></td>
+                 <td><input type="text" id="cn" name="course_name" placeholder="请假课程"></td>
+                 <td><input type="text" id="tn" name="teacher_name" placeholder="相关老师"></td>
+            </tr>
+        </tbody>
+
+
+    </table>
+        <div><input id="sub" class="btn btn-primary btn-block" type="submit" value="提交"></div>
+
+  </form>
+{%endblock%}
+{% block script%}
+    <script>
+            $("#sn").blur(
+				function() {
+                    var len = $("#sn").val().length;
+                    var student_name = $("#sn").val();
+                    var url='/askname_ajax/?student_name='+student_name;
+                    $.ajax(
+                  {
+                      url:url,
+                      type:'get',
+                      data:"",
+                      success:function(data) {
+                          var content = data.content;
+                          var s = data.status;
+                        if( s == "success"){
+                            $("#sub").attr("disabled",false);
+                            alert(content)
+                        }else{
+                             $("#sub").attr("disabled",true);
+                             alert(content)
+
+                        }
+
+                      },
+                      error:function(error) {
+                          console.log(error)
+                      }
+                  }
+              )
+
+
+                });
+         $("#re").blur(
+				function() {
+                    var len = $("#re").val().length;
+                    if (len <= 1) {
+                        alert("请假理由不能为空")
+                    } else if (len > 50) {
+                        alert("名字长度超出范围")
+                    }
+
+                });
+         $("#as").blur(
+				function() {
+                    var len = $("#as").val().length;
+                    var asktime = $("#as").val();
+                    var url='/asktime_ajax/?asktime='+asktime;
+                    $.ajax(
+                  {
+                      url:url,
+                      type:'get',
+                      data:"",
+                      success:function(data) {
+                          var content = data.content;
+                          var s = data.status;
+                        if( s == "success"){
+                            $("#sub").attr("disabled",false);
+                            alert(content)
+                        }else{
+                             $("#sub").attr("disabled",true);
+                             alert(content)
+
+                        }
+
+                      },
+                      error:function(error) {
+                          console.log(error)
+                      }}
+                    )
+                });
+         $("#cn").blur(
+				function() {
+                    var len = $("#cn").val().length;
+                    var course_name = $("#cn").val();
+                    var url='/askcourse_ajax/?course_name='+course_name;
+                    $.ajax(
+                  {
+                      url:url,
+                      type:'get',
+                      data:"",
+                      success:function(data) {
+                          var content = data.content;
+                          var s = data.status;
+                        if( s == "success"){
+                            $("#sub").attr("disabled",false);
+                            alert(content)
+                        }else{
+                             $("#sub").attr("disabled",true);
+                             alert(content)
+
+                        }
+
+                      },
+                      error:function(error) {
+                          console.log(error)
+                      }}
+                    )
+
+                });
+         $("#tn").blur(
+				function() {
+                    var len = $("#tn").val().length;
+                    var teacher_name = $("#tn").val();
+                    var course_name = $("#cn").val();
+                     var student_name = $("#sn").val();
+                    var url='/askteacher_ajax/?teacher_name='+teacher_name+'&course_name='+course_name
+                    +'&student_name='+student_name;
+                    $.ajax(
+                  {
+                      url:url,
+                      type:'get',
+                      data:"",
+                      success:function(data) {
+                          var content = data.content;
+                          var s = data.status;
+                        if( s == "success"){
+                            $("#sub").attr("disabled",false);
+                            alert(content)
+                        }else{
+                             $("#sub").attr("disabled",true);
+                             alert(content)
+
+                        }
+
+                      },
+                      error:function(error) {
+                          console.log(error)
+                      }}
+                    )
+
+                });
+
+    </script>
+{%endblock%}

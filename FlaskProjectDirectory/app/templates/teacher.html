@@ -1,0 +1,91 @@
+
+{% extends 'blank.html' %}
+{% block title %}
+    教师个人信息
+{% endblock %}
+{% block content %}
+{% if request.cookies.user_identity == "0" %}
+<div style="text-align: center"><h1>课程详情</h1>
+
+</div>
+<div style="line-height: 100px;margin-left: 200px;">
+    <ul style="list-style: none;font-size: 30px;">
+        <li>教师名字：{{teacher.name}}</li>
+        <li>年龄：{{teacher.age}}</li>
+         <li>性别：{{teacher.gender}}</li>
+        <li>简介：<br>
+            <textarea style="width: 700px;height: 200px;">{{teacher.description}}</textarea></li>
+
+    </ul>
+</div>
+
+{%else%}
+    <table class="table" style="text-align: center">
+            <div style="text-align: center"><h1 >教师个人信息</h1></div>
+        <thead>
+
+            <tr>
+                <th>姓名</th>
+                 <th>年龄</th>
+                 <th>性别</th>
+                <th>所教课程</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>{{teacher.name}}</td>
+                 <td>{{teacher.age}}</td>
+                 <td>{{teacher.gender}}</td>
+               <td>{{teacher.to_course.lable}}</td>
+                <td><button class="btn btn-danger"><a href="#">考勤</a></button>
+                  <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+                      <a>修改</a></button>
+                </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+
+
+
+ <div class="modal fade" id="myModal" tabindex="-1" rode="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">修改个人信息</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <form method="post" class="form" enctype="multipart/form-data" action="/teacher/" >
+                   <p style="display: none">{{ csrf_token() }}</p>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            姓名：<input class="form-control form-control-user" value="{{ teacher.name }}" type="text" name="name">
+                             <input class="form-control form-control-user" value="{{ teacher.id }}" type="hidden" name="id">
+
+                        </div>
+                        <div class="form-group">
+                             性别：<input class="form-control form-control-user" value="{{ teacher.gender }}" type="text" name="gender">
+                        </div>
+                          <div class="form-group">
+                           年龄： <input class="form-control form-control-user" value="{{ teacher.age }}" type="text" name="age">
+                        </div>
+                        <div class="form-group">
+                           专业<em style="color: red">(如需变动，请联系校方）</em>：{{teacher.to_course.lable}}
+                        </div>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">修改成功</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{%endif%}
+{% endblock %}

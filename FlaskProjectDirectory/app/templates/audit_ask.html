@@ -1,0 +1,87 @@
+
+{% extends 'blank.html' %}
+{% block title %}
+    学生审核假条信息
+{% endblock %}
+{% block content %}
+ <form method="post">
+            <p style="display: none">{{ csrf_token() }}</p>
+    <table class="table" style="text-align: center">
+        <div style="text-align: center"><h1 >学生需审核假条信息列表<em style="color: red">({{teacher.to_course.lable}}专业）</em>
+        <p style="color:black;font-size: 35px; ">学生：{{student.name}}</p>
+        </h1>
+
+
+        </div>
+
+        <thead>
+            <tr>
+
+                 <th>申请时间</th>
+                <th>查看</th>
+                <th>状态</th>
+               <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+       {%for a in ask%}
+            <tr>
+                <td>{{a.subtime}}</td>
+                 <td><a  class="btn btn-danger" data-toggle="modal" data-target="#myModal{{a.id}}">假条详情</a></td>
+                 <td>正在审核</td>
+                <td>
+
+                        <input type="hidden" name="ask_id" value="{{a.id}}">
+                      <input type="submit" name="verdict"  class="btn btn-danger" value="批准">
+                     <input type="submit" name="verdict"  class="btn btn-danger" value="拒绝">
+
+                </td>
+
+
+            </tr>
+       <div class="modal fade" id="myModal{{a.id}}" tabindex="-1" rode="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">假条详情</h4>
+                    <button type="text" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <ul>
+                    <li>学生姓名：{{student.name}}</li>
+
+                    <li>相关专业:{{teacher.to_course.lable}}</li>
+
+
+                    <li>相关老师:{{teacher.name}}</li>
+                    <li>假条内容：
+                        <ul>
+                            <li>请假时间：{{a.asktime}}</li>
+                            <li>请假理由:{{a.reason}}</li>
+                            <li>请假期限:</li>
+                        </ul>
+
+
+                    </li>
+
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+
+ </form>
+       {%endfor%}
+
+
+
+
+        </tbody>
+
+    </table>
+ </form>
+
+
+
+{% endblock %}

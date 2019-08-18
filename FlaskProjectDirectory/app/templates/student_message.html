@@ -1,0 +1,78 @@
+{% extends 'blank.html' %}
+{% block title %}
+    所教学生信息
+{% endblock %}
+{% block content %}
+ <form method="post">
+            <p style="display: none">{{ csrf_token() }}</p>
+    <table class="table" style="text-align: center">
+        <div style="text-align: center"><h1 >学生信息列表<em style="color: red">({{teacher.to_course.lable}}专业）</em></h1></div>
+
+        <thead>
+            <tr>
+                <th>姓名</th>
+                 <th>年龄</th>
+                <th>性别</th>
+                <th>在校状态</th>
+                 <th>查看</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+{%for s in  student_course_teacher_list%}
+            <tr>
+                <td>{{s.student.name}}</td>
+                 <td>{{s.student.age}}</td>
+                 <td>{{s.student.gender}}</td>
+                {%if s.student.has_school == 1%}
+
+                <td>在籍</td>
+                {%else%}
+                   <td><em style="color: red">未在籍(开除/退学）</em></td>
+                {%endif%}
+
+                <td><button class="btn btn-danger"><a href="#">学生考勤</a></button>
+
+
+                      <a  class="btn btn-danger" data-toggle="modal" data-target="#myModal{{s.student.id}}">所报专业</a>
+
+                </td>
+                <td>
+                    {%if s.student.has_school == 1%}
+                    <button class="btn btn-danger" disabled><a href="#">注销</a></button></td>
+                {%else%}
+                  <button class="btn btn-danger"><a href="#">注销</a></button></td>
+                {%endif%}
+            </tr>
+<div class="modal fade" id="myModal{{s.student.id}}" tabindex="-1" rode="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">学生：{{s.student.name}}所报的课程</h4>
+                    <button type="text" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <ul>
+                 {%for stc in s.stu_list%}
+
+                    <li>专业名字：{{stc.course.lable}}<br>相关老师：{{stc.teacher_lst.name}}</li>
+
+                 {%endfor%}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+
+ </form>
+        {%endfor%}
+
+
+        </tbody>
+
+    </table>
+ </form>
+
+
+
+{% endblock %}

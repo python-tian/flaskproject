@@ -1,0 +1,91 @@
+{% extends 'blank.html' %}
+{% block title %}
+    学生个人信息
+{% endblock %}
+{% block content %}
+    <form method="post">
+            <p style="display: none">{{ csrf_token() }}</p>
+    <table class="table" style="text-align: center">
+            <div style="text-align: center"><h1 >选择课程<br><em style="color: red;font-size: 10px;">(友情提醒：一旦提交成功,不能更改，取消，只有申请相关老师）</em></h1></div>
+        <thead>
+
+            <tr>
+                <th>课程名字</th>
+                 <th>课程描述</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+
+        <tbody>
+           {%for course in course_list%}
+            <tr>
+                <td><a href="/course/?id={{course.id}}">{{course.lable}}</a></td>
+                 <td>{{course.description}}</td>
+
+                <td>
+                 <input type="checkbox"   value="{{course.id}}" name="course_{{course.id}}"
+                        id="gp{{course.id}}" onclick="edit({{course.id}})">
+                </td>
+            </tr>
+
+        {%endfor%}
+
+        </tbody>
+
+
+    </table>
+
+ <div>
+     <input id="sub" class="btn btn-primary btn-block" type="submit" value="提交">
+     <!--<input  class="btn btn-primary btn-block" type="submit" value="取消">-->
+
+      </div>
+
+  </form>
+
+{%endblock%}
+{% block script %}
+<script>
+         function edit(t_id) {
+
+
+            console.log(t_id);
+            var id=$("#gp"+t_id).val();
+            // var goods_price=$("#gp"+t_id).val();
+            var url="/course_ajax/?id="+id;
+            $.ajax({
+                url:url,
+                type:'get',
+                data:'',
+                success:function(data) {
+                    var content=data.content;
+
+
+
+                   var s=data.status;
+                      if(s=="success"){
+
+                          $("#sumbit").attr("disabled",true);
+                            alert(content);
+
+
+
+
+                       }else{
+                           $("#sumbit").attr("disabled",true);
+                           $("#gp"+t_id).prop("checked",false);
+                                alert(content);
+                       }
+
+                },
+                error:function(error) {
+                    console.log(error);
+
+
+                }
+            });
+
+        }
+</script>
+
+{% endblock %}

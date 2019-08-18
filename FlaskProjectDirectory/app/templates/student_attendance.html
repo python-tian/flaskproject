@@ -1,0 +1,35 @@
+{% extends 'blank.html' %}
+{% block title %}
+    学生个人信息
+{% endblock %}
+{% block content %}
+    <form method="post">
+            <p style="display: none">{{ csrf_token() }}</p>
+    <table class="table" style="text-align: center">
+            <div style="text-align: center"><h1 >本周考勤详情</h1></div>
+        <thead>
+
+            <tr>
+                <th>请假次数</th>
+                 <th>旷课次数</th>
+                <th>正常上课次数</th>
+                <th>迟到次数</th>
+                <th>早退次数</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td></td>
+                 <td></td>
+                 <td>
+                 </td>
+            </tr>
+        </tbody>
+
+
+    </table>
+
+  </form>
+{%endblock%}

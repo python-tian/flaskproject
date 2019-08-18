@@ -1,0 +1,22 @@
+{% extends 'blank.html' %}
+{% block title %}
+    学生假条列表信息
+{% endblock %}
+{% block content %}
+    <div style="text-align: center"><h1>我的假条</h1></div>
+<div style="margin-left: 600px;margin-top:50px;line-height:50px;">
+    <ul>
+        <li style="font-size: 30px;">过期的假条</li>
+        <li style="font-size: 30px;">本学期的假条
+            <ul style="font-size: 20px;">
+                 <li>批准的假条</li>
+              <li>拒批的假条</li>
+         <li>正在审核的假条</li>
+            </ul>
+
+        </li>
+
+
+    </ul>
+</div>
+{%endblock%}
